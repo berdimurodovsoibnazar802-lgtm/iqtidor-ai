@@ -1,0 +1,45 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
+import { useLocation } from 'react-router-dom'
+import Dashboard from './pages/Dashboard'
+import Vacancies from './pages/Vacancies'
+import Applications from './pages/Applications'
+import Profile from './pages/Profile'
+import Navbar from './components/Navbar'
+import VacancyDetail from './pages/VacancyDetail'
+import ApplicationDetail from './pages/ApplicationDetail'
+import Login from './pages/Login'
+import Apply from './pages/Apply'
+import Notifications from './pages/Notifications'
+
+function AppContent() {
+  const location = useLocation()
+  return (
+    <>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/apply/:id" element={<Apply />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/applications/:id" element={<ApplicationDetail />} />
+          <Route path="/vacancies/:id" element={<VacancyDetail />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/vacancies" element={<Vacancies />} />
+          <Route path="/applications" element={<Applications />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </AnimatePresence>
+      <Navbar />
+    </>
+  )
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <div style={{ backgroundColor: '#FAF9F6', minHeight: '100vh' }}>
+        <AppContent />
+      </div>
+    </BrowserRouter>
+  )
+}
