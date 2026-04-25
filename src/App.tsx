@@ -18,9 +18,9 @@ function AppContent() {
     <>
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
+          <Route path="/login" element={<Login />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/apply/:id" element={<Apply />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/applications/:id" element={<ApplicationDetail />} />
           <Route path="/vacancies/:id" element={<VacancyDetail />} />
           <Route path="/" element={<Dashboard />} />

@@ -52,8 +52,8 @@ export default function Dashboard() {
   <Bell size={18} color="#FFFFFF" strokeWidth={1.5} />
   <div style={{
     position: 'absolute',
-    top: '-6px',
-    right: '-8px',
+    top: '-4px',
+    right: '-7px',
     width: '14px',
     height: '14px',
     borderRadius: '50%',

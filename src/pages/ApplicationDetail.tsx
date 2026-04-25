@@ -35,7 +35,7 @@ export default function ApplicationDetail() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
           <motion.button
             whileTap={{ scale: 0.92 }}
-           onClick={() => navigate(`/apply/${app.id}`)}
+            onClick={() => navigate(-1)}
             style={{ backgroundColor: 'rgba(255,255,255,0.12)', border: 'none', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}
           >
             <ArrowLeft size={17} color="#FFFFFF" strokeWidth={2} />
