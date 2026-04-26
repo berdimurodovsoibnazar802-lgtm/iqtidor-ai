@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 const CATEGORIES = ['Barchasi', 'Tibbiyot', "Ta'lim", 'IT', 'Moliya']
 
+
 export default function Vacancies() {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('Barchasi')

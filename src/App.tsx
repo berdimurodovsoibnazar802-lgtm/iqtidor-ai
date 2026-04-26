@@ -11,6 +11,10 @@ import ApplicationDetail from './pages/ApplicationDetail'
 import Login from './pages/Login'
 import Apply from './pages/Apply'
 import Notifications from './pages/Notifications'
+import InterviewSlots from './pages/InterviewSlots'
+import InterviewRoom from './pages/InterviewRoom'
+import EvaluationForm from './pages/EvaluationForm'
+import InterviewResult from './pages/InterviewResult'
 
 function AppContent() {
   const location = useLocation()
@@ -27,6 +31,10 @@ function AppContent() {
           <Route path="/vacancies" element={<Vacancies />} />
           <Route path="/applications" element={<Applications />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/interview-slots/:id" element={<InterviewSlots />} />
+          <Route path="/interview-room/:id" element={<InterviewRoom />} />
+          <Route path="/evaluation/:id" element={<EvaluationForm />} />
+          <Route path="/interview-result/:id" element={<InterviewResult />} />
         </Routes>
       </AnimatePresence>
       <Navbar />

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FileText, ChevronRight, X, Shield, CheckCircle, Clock, AlertCircle } from 'lucide-react'
+import { FileText, ChevronRight, X, Shield, CheckCircle, Clock, AlertCircle, Calendar, Users } from 'lucide-react'
 import { useEffect } from 'react'
 import { COLORS, cv, iv } from '../lib/constants'
 import { APPLICATIONS } from '../data/mockData'
@@ -11,7 +11,13 @@ const TABS = [
   { key: 'active', label: 'Jarayonda' },
   { key: 'completed', label: 'Yakunlangan' },
   { key: 'rejected', label: 'Rad etildi' },
+  { key: 'interview', label: 'Suhbatlar' },
 ]
+
+const INTERVIEW_DATA: Record<number, { type: string; typeLabel: string; date: string; time: string; commissionCount: number }> = {
+  1: { type: 'online', typeLabel: 'Masofaviy', date: '20-may, 2026', time: '15:00–16:00', commissionCount: 3 },
+  4: { type: 'offline', typeLabel: 'Jonli', date: '28-may, 2026', time: '14:00–15:00', commissionCount: 4 },
+}
 
 export default function Applications() {
   const navigate = useNavigate()
@@ -25,6 +31,7 @@ export default function Applications() {
     if (tab === 'active') return ['test', 'review', 'interview'].includes(a.status)
     if (tab === 'completed') return a.status === 'completed'
     if (tab === 'rejected') return a.status === 'rejected'
+    if (tab === 'interview') return ['test', 'review', 'interview', 'completed'].includes(a.status)
     return true
   })
 
@@ -73,62 +80,160 @@ export default function Applications() {
         </motion.div>
 
         {/* Arizalar ro'yxati */}
-        {filtered.map((app, i) => (
-          <motion.div
-            key={app.id}
-            variants={iv}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => navigate(`/applications/${app.id}`)}
-            style={{
-              backgroundColor: COLORS.card,
-              borderRadius: '16px',
-              padding: '16px',
-              marginBottom: '10px',
-              border: `1px solid ${COLORS.border}`,
-              boxShadow: '0 2px 8px rgba(30,58,138,0.05)',
-              cursor: 'pointer',
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
-              <div style={{ flex: 1 }}>
-                <p style={{ fontSize: '14px', fontWeight: 600, color: COLORS.textDark, fontFamily: 'Inter', marginBottom: '3px' }}>
-                  {app.title}
-                </p>
-                <p style={{ fontSize: '12px', color: COLORS.textMid, fontFamily: 'Inter' }}>
-                  {app.org}
-                </p>
+        {filtered.map((app) => {
+          if (tab === 'interview') {
+            const iv_data = INTERVIEW_DATA[app.id]
+            return (
+              <motion.div
+                key={app.id}
+                variants={iv}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => navigate(`/applications/${app.id}`)}
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: '16px',
+                  padding: '16px',
+                  marginBottom: '10px',
+                  border: '1px solid #E8F0FE',
+                  boxShadow: '0 2px 8px rgba(30,58,138,0.05)',
+                  cursor: 'pointer',
+                }}
+              >
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ fontSize: '14px', fontWeight: 600, color: COLORS.textDark, fontFamily: 'Inter', marginBottom: '3px' }}>
+                      {app.title}
+                    </p>
+                    <p style={{ fontSize: '12px', color: COLORS.textMid, fontFamily: 'Inter' }}>
+                      {app.org}
+                    </p>
+                  </div>
+                  {iv_data && (
+                    <span style={{
+                      backgroundColor: '#00ADB5',
+                      color: '#FFFFFF',
+                      fontSize: '9px',
+                      fontFamily: 'Inter',
+                      fontWeight: 600,
+                      padding: '3px 8px',
+                      borderRadius: '20px',
+                      flexShrink: 0,
+                    }}>
+                      {iv_data.typeLabel}
+                    </span>
+                  )}
+                </div>
+
+                {iv_data && (
+                  <div style={{ marginBottom: '10px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Calendar size={13} color={COLORS.textMid} strokeWidth={1.5} />
+                      <span style={{ fontSize: '12px', color: COLORS.textMid, fontFamily: 'Inter' }}>
+                        {iv_data.date} · {iv_data.time}
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Users size={13} color={COLORS.textMid} strokeWidth={1.5} />
+                      <span style={{ fontSize: '12px', color: COLORS.textMid, fontFamily: 'Inter' }}>
+                        {iv_data.commissionCount} nafar komissiya
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Shield size={13} color={COLORS.textLight} strokeWidth={1.5} />
+                      <span style={{ fontSize: '11px', color: COLORS.textLight, fontFamily: 'Inter' }}>
+                        Yozib olinadi
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Progress */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '10px' }}>
+                  {app.steps.map((step, si) => (
+                    <div
+                      key={si}
+                      style={{
+                        flex: 1,
+                        height: '3px',
+                        borderRadius: '2px',
+                        backgroundColor: step.done ? COLORS.accent : COLORS.borderLight,
+                      }}
+                    />
+                  ))}
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: app.statusColor, display: 'inline-block' }} />
+                    <span style={{ fontSize: '11px', color: app.statusColor, fontFamily: 'Inter', fontWeight: 500 }}>
+                      {app.statusLabel}
+                    </span>
+                  </div>
+                  <span style={{ fontSize: '11px', color: COLORS.textLight, fontFamily: 'Inter' }}>
+                    {app.date}
+                  </span>
+                </div>
+              </motion.div>
+            )
+          }
+
+          return (
+            <motion.div
+              key={app.id}
+              variants={iv}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => navigate(`/applications/${app.id}`)}
+              style={{
+                backgroundColor: COLORS.card,
+                borderRadius: '16px',
+                padding: '16px',
+                marginBottom: '10px',
+                border: `1px solid ${COLORS.border}`,
+                boxShadow: '0 2px 8px rgba(30,58,138,0.05)',
+                cursor: 'pointer',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
+                <div style={{ flex: 1 }}>
+                  <p style={{ fontSize: '14px', fontWeight: 600, color: COLORS.textDark, fontFamily: 'Inter', marginBottom: '3px' }}>
+                    {app.title}
+                  </p>
+                  <p style={{ fontSize: '12px', color: COLORS.textMid, fontFamily: 'Inter' }}>
+                    {app.org}
+                  </p>
+                </div>
+                <ChevronRight size={16} color={COLORS.textLight} strokeWidth={1.5} />
               </div>
-              <ChevronRight size={16} color={COLORS.textLight} strokeWidth={1.5} />
-            </div>
 
-            {/* Progress */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '10px' }}>
-              {app.steps.map((step, si) => (
-                <div
-                  key={si}
-                  style={{
-                    flex: 1,
-                    height: '3px',
-                    borderRadius: '2px',
-                    backgroundColor: step.done ? COLORS.accent : COLORS.borderLight,
-                  }}
-                />
-              ))}
-            </div>
+              {/* Progress */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '10px' }}>
+                {app.steps.map((step, si) => (
+                  <div
+                    key={si}
+                    style={{
+                      flex: 1,
+                      height: '3px',
+                      borderRadius: '2px',
+                      backgroundColor: step.done ? COLORS.accent : COLORS.borderLight,
+                    }}
+                  />
+                ))}
+              </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: app.statusColor, display: 'inline-block' }} />
-                <span style={{ fontSize: '11px', color: app.statusColor, fontFamily: 'Inter', fontWeight: 500 }}>
-                  {app.statusLabel}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: app.statusColor, display: 'inline-block' }} />
+                  <span style={{ fontSize: '11px', color: app.statusColor, fontFamily: 'Inter', fontWeight: 500 }}>
+                    {app.statusLabel}
+                  </span>
+                </div>
+                <span style={{ fontSize: '11px', color: COLORS.textLight, fontFamily: 'Inter' }}>
+                  {app.date}
                 </span>
               </div>
-              <span style={{ fontSize: '11px', color: COLORS.textLight, fontFamily: 'Inter' }}>
-                {app.date}
-              </span>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          )
+        })}
 
         {filtered.length === 0 && (
           <div style={{ textAlign: 'center', padding: '40px 20px' }}>
