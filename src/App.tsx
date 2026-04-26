@@ -15,6 +15,8 @@ import InterviewSlots from './pages/InterviewSlots'
 import InterviewRoom from './pages/InterviewRoom'
 import EvaluationForm from './pages/EvaluationForm'
 import InterviewResult from './pages/InterviewResult'
+import Register from './pages/Register'
+import TestExam from './pages/TestExam'
 
 function AppContent() {
   const location = useLocation()
@@ -35,6 +37,8 @@ function AppContent() {
           <Route path="/interview-room/:id" element={<InterviewRoom />} />
           <Route path="/evaluation/:id" element={<EvaluationForm />} />
           <Route path="/interview-result/:id" element={<InterviewResult />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/test/:id" element={<TestExam />} />
         </Routes>
       </AnimatePresence>
       <Navbar />

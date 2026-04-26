@@ -257,7 +257,10 @@ export default function Login() {
 
               <p style={{ textAlign: 'center', fontSize: '13px', color: COLORS.textLight, fontFamily: 'Inter', marginTop: '16px' }}>
                 Akkaunt yo'qmi?{' '}
-                <span style={{ color: COLORS.primary, fontWeight: 600, cursor: 'pointer' }}>
+                <span
+                  onClick={() => navigate('/register')}
+                  style={{ color: COLORS.primary, fontWeight: 600, cursor: 'pointer' }}
+                >
                   Ro'yxatdan o'tish
                 </span>
               </p>
