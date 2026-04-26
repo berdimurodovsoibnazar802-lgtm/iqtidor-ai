@@ -155,7 +155,7 @@ export default function Report() {
 
   // ── Main form ──────────────────────────────────────────────────────────────
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: COLORS.bg, maxWidth: '480px', margin: '0 auto', paddingBottom: '100px' }}>
+    <div style={{ minHeight: '100vh', backgroundColor: COLORS.bg, maxWidth: '480px', margin: '0 auto', paddingBottom: '170px' }}>
 
       {/* Header */}
       <div style={{ backgroundColor: '#1E3A8A', padding: '52px 20px 24px' }}>
@@ -535,14 +535,17 @@ export default function Report() {
       </div>
 
       {/* Fixed bottom button */}
-      <div style={{
-        position: 'fixed', bottom: 0,
-        left: '50%', transform: 'translateX(-50%)',
-        width: '100%', maxWidth: '480px',
-        padding: '12px 20px 28px',
-        backgroundColor: COLORS.bg,
-        borderTop: `1px solid ${COLORS.border}`,
-      }}>
+      {/* Fixed bottom button */}
+<div style={{
+  position: 'fixed',
+  bottom: 'calc(72px + env(safe-area-inset-bottom))',
+  left: '50%', transform: 'translateX(-50%)',
+  width: '100%', maxWidth: '480px',
+  padding: '12px 20px',
+  backgroundColor: COLORS.bg,
+  borderTop: `1px solid ${COLORS.border}`,
+  zIndex: 49,
+}}>
         {step < 3 ? (
           <motion.button
             whileTap={(step === 1 ? step1Valid : step2Valid) ? { scale: 0.97 } : {}}

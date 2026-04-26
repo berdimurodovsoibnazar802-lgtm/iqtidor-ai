@@ -18,6 +18,7 @@ import InterviewResult from './pages/InterviewResult'
 import Register from './pages/Register'
 import TestExam from './pages/TestExam'
 import QuickActions from './pages/QuickActions'
+import Report from './pages/Report'
 
 
 function AppContent() {
@@ -42,6 +43,7 @@ function AppContent() {
           <Route path="/interview-result/:id" element={<InterviewResult />} />
           <Route path="/register" element={<Register />} />
           <Route path="/test/:id" element={<TestExam />} />
+          <Route path="/report" element={<Report />} />
         </Routes>
       </AnimatePresence>
       <Navbar />

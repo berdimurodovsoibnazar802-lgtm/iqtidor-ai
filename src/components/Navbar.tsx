@@ -1,7 +1,6 @@
-import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
-import { LayoutDashboard, Briefcase, FileText, User, Plus, Bell, BookOpen, Video, ChevronRight, Shield } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { LayoutDashboard, Briefcase, FileText, User, Plus } from 'lucide-react'
 import { COLORS } from '../lib/constants'
 
 const NAV_ITEMS = [
@@ -12,13 +11,16 @@ const NAV_ITEMS = [
   { id: 'profile', label: 'Profil', path: '/profile', icon: User },
 ]
 
+const HIDE_NAVBAR = ['/login', '/register']
+
 export default function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
-  const [showModal, setShowModal] = useState(false)
+
+  // Login va Register sahifalarida Navbar ko'rinmasin
+  if (HIDE_NAVBAR.includes(location.pathname)) return null
 
   return (
-    <>
     <nav style={{
       position: 'fixed',
       bottom: 0, left: 0, right: 0,
@@ -56,7 +58,7 @@ export default function Navbar() {
                 />
                 <motion.button
                   whileTap={{ scale: 0.88 }}
-                  onClick={() => setShowModal(true)}
+                  onClick={() => navigate('/quick-actions')}
                   style={{
                     position: 'relative', zIndex: 1,
                     width: '52px', height: '52px',
@@ -116,144 +118,5 @@ export default function Navbar() {
         })}
       </div>
     </nav>
-
-    <AnimatePresence>
-      {showModal && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowModal(false)}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              backgroundColor: 'rgba(0,0,0,0.5)',
-              backdropFilter: 'blur(8px)',
-              zIndex: 100,
-            }}
-          />
-
-          {/* Bottom sheet */}
-          <motion.div
-            initial={{ y: '100%' }}
-            animate={{ y: 0 }}
-            exit={{ y: '100%' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            style={{
-              position: 'fixed',
-              bottom: '80px',
-              left: 0,
-              right: 0,
-              maxWidth: '480px',
-              margin: '0 auto',
-              backgroundColor: '#FFFFFF',
-              borderRadius: '24px 24px 0 0',
-              zIndex: 101,
-              overflow: 'hidden',
-            }}
-          >
-            {/* Handle bar */}
-            <div style={{
-              width: '36px',
-              height: '4px',
-              backgroundColor: '#E2E8F0',
-              borderRadius: '2px',
-              margin: '12px auto',
-            }} />
-
-            {/* Title */}
-            <p style={{
-              fontSize: '16px',
-              fontWeight: 700,
-              color: '#212529',
-              fontFamily: 'Inter',
-              textAlign: 'center',
-              padding: '8px 20px 16px',
-              letterSpacing: '-0.01em',
-            }}>
-              Nima qilmoqchisiz?
-            </p>
-
-            {/* Action items */}
-            {[
-              {
-                icon: <Briefcase size={22} color="#1E3A8A" strokeWidth={1.5} />,
-                iconBg: '#EFF6FF',
-                label: 'Vakansiyaga ariza yuborish',
-                sub: "Yangi ish o'rni toping",
-                onClick: () => { navigate('/quick-action') },
-              },
-              {
-                icon: <BookOpen size={22} color="#00ADB5" strokeWidth={1.5} />,
-                iconBg: '#F0FDFA',
-                label: 'Testga kirish',
-                sub: "Bilimingizni sinab ko'ring",
-                onClick: () => { navigate('/test/1'); setShowModal(false) },
-              },
-              {
-                icon: <Video size={22} color="#D97706" strokeWidth={1.5} />,
-                iconBg: '#FFFBEB',
-                label: 'Intervyuga kirish',
-                sub: "Suhbat xonasiga o'ting",
-                onClick: () => { navigate('/interview-room/1'); setShowModal(false) },
-              },
-            ].map((item, i, arr) => (
-              <motion.div
-                key={i}
-                whileTap={{ scale: 0.98 }}
-                onClick={item.onClick}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '14px',
-                  padding: '14px 20px',
-                  borderBottom: i < arr.length - 1 ? '1px solid #F1F5F9' : 'none',
-                  cursor: 'pointer',
-                }}
-              >
-                <div style={{
-                  width: '46px',
-                  height: '46px',
-                  borderRadius: '14px',
-                  backgroundColor: item.iconBg,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                }}>
-                  {item.icon}
-                </div>
-                <div style={{ flex: 1 }}>
-                  <p style={{ fontSize: '14px', fontWeight: 600, color: '#212529', fontFamily: 'Inter', marginBottom: '2px' }}>
-                    {item.label}
-                  </p>
-                  <p style={{ fontSize: '12px', color: '#6B7280', fontFamily: 'Inter' }}>
-                    {item.sub}
-                  </p>
-                </div>
-                <ChevronRight size={16} color="#9CA3AF" strokeWidth={2} />
-              </motion.div>
-            ))}
-
-            {/* Footer */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              padding: '16px',
-            }}>
-              <Shield size={11} color="#9CA3AF" strokeWidth={1.5} />
-              <span style={{ fontSize: '11px', color: '#9CA3AF', fontFamily: 'Inter' }}>
-                Barcha ma'lumotlar xavfsiz
-              </span>
-            </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
-    </>
   )
 }
