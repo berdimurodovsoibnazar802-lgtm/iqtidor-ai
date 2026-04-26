@@ -35,7 +35,7 @@ export default function InterviewRoom() {
   return (
     <div
       style={{
-        minHeight: '100vh',
+        minHeight: '95vh',
         backgroundColor: '#0F172A',
         maxWidth: '480px',
         margin: '0 auto',
@@ -121,7 +121,7 @@ export default function InterviewRoom() {
             backgroundColor: '#1E293B',
             borderRadius: '20px',
             width: '100%',
-            height: '260px',
+            height: '250px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -164,8 +164,8 @@ export default function InterviewRoom() {
               position: 'absolute',
               bottom: '12px',
               right: '12px',
-              width: '80px',
-              height: '100px',
+              width: '70px',
+              height: '90px',
               backgroundColor: '#0F172A',
               borderRadius: '12px',
               border: '2px solid #475569',

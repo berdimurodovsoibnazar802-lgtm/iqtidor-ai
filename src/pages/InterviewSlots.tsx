@@ -270,8 +270,9 @@ export default function InterviewSlots() {
 
       {/* Fixed confirm button */}
       <div style={{
-        position: 'fixed',
-        bottom: 0,
+        position: 'relative',
+marginTop: '20px',
+marginBottom: '40px',
         left: '50%',
         transform: 'translateX(-50%)',
         width: '100%',

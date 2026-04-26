@@ -17,6 +17,8 @@ import EvaluationForm from './pages/EvaluationForm'
 import InterviewResult from './pages/InterviewResult'
 import Register from './pages/Register'
 import TestExam from './pages/TestExam'
+import QuickActions from './pages/QuickActions'
+
 
 function AppContent() {
   const location = useLocation()
@@ -24,6 +26,7 @@ function AppContent() {
     <>
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
+          <Route path="/quick-actions" element={<QuickActions />} />
           <Route path="/login" element={<Login />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/apply/:id" element={<Apply />} />
